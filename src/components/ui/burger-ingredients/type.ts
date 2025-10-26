@@ -13,4 +13,6 @@ export type BurgerIngredientsUIProps = {
   mainsRef: (node?: Element | null | undefined) => void;
   saucesRef: (node?: Element | null | undefined) => void;
   onTabClick: (val: string) => void;
+  onAddIngredient: (ingredient: TIngredient) => void; // Добавьте эту строку
+  getIngredientCount: (ingredient: TIngredient) => number; // Добавьте эту строку
 };

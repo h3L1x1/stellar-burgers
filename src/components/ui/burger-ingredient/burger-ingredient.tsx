@@ -1,4 +1,4 @@
-import React, { FC, memo } from 'react';
+import React, { FC, memo, SyntheticEvent } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './burger-ingredient.module.css';
 
@@ -13,6 +13,12 @@ import { TBurgerIngredientUIProps } from './type';
 export const BurgerIngredientUI: FC<TBurgerIngredientUIProps> = memo(
   ({ ingredient, count, handleAdd, locationState }) => {
     const { image, price, name, _id } = ingredient;
+
+    const onAddClick = (e: SyntheticEvent) => {
+      e.stopPropagation();
+      e.preventDefault();
+      handleAdd();
+    };
 
     return (
       <li className={styles.container}>
@@ -31,7 +37,7 @@ export const BurgerIngredientUI: FC<TBurgerIngredientUIProps> = memo(
         </Link>
         <AddButton
           text='Добавить'
-          onClick={handleAdd}
+          onClick={onAddClick}
           extraClass={`${styles.addButton} mt-8`}
         />
       </li>

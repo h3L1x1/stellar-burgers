@@ -1,14 +1,21 @@
+// ui/OrdersListUI.tsx
 import { FC } from 'react';
-
-import styles from './orders-list.module.css';
-
 import { OrdersListUIProps } from './type';
 import { OrderCard } from '@components';
+import styles from './orders-list.module.css'; // Убедитесь, что стили есть
 
-export const OrdersListUI: FC<OrdersListUIProps> = ({ orderByDate }) => (
-  <div className={`${styles.content}`}>
-    {orderByDate.map((order) => (
-      <OrderCard order={order} key={order._id} />
-    ))}
-  </div>
-);
+export const OrdersListUI: FC<OrdersListUIProps> = ({ orderByDate }) => {
+  console.log('OrdersListUI: Получены заказы для отображения:', orderByDate);
+
+  if (!orderByDate || orderByDate.length === 0) {
+    return <div className={styles.empty}>Нет заказов</div>;
+  }
+
+  return (
+    <div className={styles.orders}>
+      {orderByDate.map((order) => (
+        <OrderCard key={order._id} order={order} />
+      ))}
+    </div>
+  );
+};
