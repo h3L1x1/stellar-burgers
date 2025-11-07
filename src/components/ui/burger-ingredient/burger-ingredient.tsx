@@ -11,7 +11,8 @@ import {
 import { TBurgerIngredientUIProps } from './type';
 
 export const BurgerIngredientUI: FC<TBurgerIngredientUIProps> = memo(
-  ({ ingredient, count, handleAdd, locationState }) => {
+  ({ ingredient, count, handleAdd, locationState, onIngredientClick }) => {
+    // 🔥 Добавьте пропс в параметры
     const { image, price, name, _id } = ingredient;
 
     const onAddClick = (e: SyntheticEvent) => {
@@ -20,12 +21,20 @@ export const BurgerIngredientUI: FC<TBurgerIngredientUIProps> = memo(
       handleAdd();
     };
 
+    // 🔥 Обработчик клика по карточке ингредиента
+    const onIngredientCardClick = () => {
+      if (onIngredientClick) {
+        onIngredientClick();
+      }
+    };
+
     return (
       <li className={styles.container}>
         <Link
           className={styles.article}
           to={`/ingredients/${_id}`}
           state={locationState}
+          onClick={onIngredientCardClick} // 🔥 Добавьте обработчик клика
         >
           {count && <Counter count={count} />}
           <img className={styles.img} src={image} alt='картинка ингредиента.' />

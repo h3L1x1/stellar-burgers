@@ -1,6 +1,6 @@
 import { ProfileUI } from '@ui-pages';
 import { FC, SyntheticEvent, useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from '../../services/store';
 import { RootState, AppDispatch } from '../../services/store';
 import { updateUser } from '../../services/slices/authSlice';
 
@@ -8,7 +8,7 @@ export const Profile: FC = () => {
   const { user, error, isLoading } = useSelector(
     (state: RootState) => state.auth
   );
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useDispatch();
 
   const [formValue, setFormValue] = useState({
     name: '',

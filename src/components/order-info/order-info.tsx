@@ -1,17 +1,34 @@
-import { FC, useMemo } from 'react';
+import { FC, useMemo, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from '../../services/store';
+import {
+  fetchOrderByNumber,
+  clearOrder
+} from '../../services/slices/orderSlice';
 import { Preloader } from '../ui/preloader';
 import { OrderInfoUI } from '../ui/order-info';
 import { TIngredient } from '@utils-types';
-import { useSelector } from '../../services/store'; // импорт из вашего store
 
 export const OrderInfo: FC = () => {
-  // Берем orderData из стора
-  const { orderData } = useSelector((state) => state.order);
+  const { number } = useParams<{ number: string }>();
+  const dispatch = useDispatch();
 
-  // Берем ingredients из стора
+  const { orderData, loading, error } = useSelector((state) => state.order);
   const ingredients = useSelector((state) => state.ingredients.items);
 
-  /* Готовим данные для отображения */
+  useEffect(() => {
+    if (number) {
+      const orderNumber = parseInt(number, 10);
+      if (!isNaN(orderNumber)) {
+        dispatch(fetchOrderByNumber(orderNumber));
+      }
+    }
+
+    return () => {
+      dispatch(clearOrder());
+    };
+  }, [number, dispatch]);
+
   const orderInfo = useMemo(() => {
     if (!orderData || !ingredients.length) return null;
 

@@ -1,13 +1,13 @@
 import { useState, useRef, useEffect, FC } from 'react';
 import { useInView } from 'react-intersection-observer';
+import { useNavigate, useLocation } from 'react-router-dom'; // ← ДОБАВЬТЕ ИМПОРТЫ
 
 import { TTabMode } from '@utils-types';
 import { BurgerIngredientsUI } from '../ui/burger-ingredients';
-import { useSelector } from '../../services/store';
+import { useSelector, useDispatch } from '../../services/store';
 import { TIngredient } from '../../utils/types';
 import { Preloader } from '@ui';
 
-import { useDispatch } from '../../services/store';
 import { fetchIngredients } from '../../services/slices/ingredientsSlice';
 import {
   addIngredient,
@@ -16,6 +16,9 @@ import {
 
 export const BurgerIngredients: FC = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
+
   const {
     items: ingredients,
     loading,
@@ -37,6 +40,16 @@ export const BurgerIngredients: FC = () => {
       dispatch(addBun(ingredient));
     } else {
       dispatch(addIngredient(ingredient));
+    }
+  };
+
+  const handleIngredientClick = (ingredient: TIngredient) => {
+    if (location.pathname === '/') {
+      navigate(`/ingredients/${ingredient._id}`, {
+        state: { background: location }
+      });
+    } else {
+      navigate(`/ingredients/${ingredient._id}`);
     }
   };
 
@@ -110,6 +123,7 @@ export const BurgerIngredients: FC = () => {
       saucesRef={saucesRef}
       onTabClick={onTabClick}
       onAddIngredient={handleAddIngredient}
+      onIngredientClick={handleIngredientClick} // ← ПЕРЕДАЙТЕ ФУНКЦИЮ
       getIngredientCount={getIngredientCount}
     />
   );

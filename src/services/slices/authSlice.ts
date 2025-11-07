@@ -70,10 +70,8 @@ export const getUser = createAsyncThunk(
   async (_, { rejectWithValue, dispatch }) => {
     try {
       const token = getCookie('accessToken');
-      console.log('Token before getUser:', token);
 
       const response = await getUserApi();
-      console.log('User response:', response);
 
       if (response.success) {
         return response.user;
@@ -81,9 +79,6 @@ export const getUser = createAsyncThunk(
         return rejectWithValue('Failed to get user');
       }
     } catch (error: any) {
-      console.log('getUser error details:', error);
-
-      // Если ошибка авторизации, очищаем данные
       if (
         error.message === 'You should be authorised' ||
         error.message === 'jwt expired'

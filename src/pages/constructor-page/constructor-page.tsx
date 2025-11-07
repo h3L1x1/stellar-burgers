@@ -3,12 +3,20 @@ import styles from './constructor-page.module.css';
 import { BurgerIngredients } from '../../components';
 import { BurgerConstructor } from '../../components';
 import { Preloader } from '../../components/ui';
+import { Modal, IngredientDetails } from '../../components';
+import { useNavigate, useParams } from 'react-router-dom';
 import { FC } from 'react';
 
 export const ConstructorPage: FC = () => {
   const { loading: isIngredientsLoading } = useSelector(
     (state) => state.ingredients
   );
+  const navigate = useNavigate();
+  const { id } = useParams();
+
+  const handleCloseModal = () => {
+    navigate('/');
+  };
 
   return (
     <>
@@ -26,6 +34,12 @@ export const ConstructorPage: FC = () => {
             <BurgerConstructor />
           </div>
         </main>
+      )}
+
+      {id && (
+        <Modal title='Детали ингредиента' onClose={handleCloseModal}>
+          <IngredientDetails />
+        </Modal>
       )}
     </>
   );

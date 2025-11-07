@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from '../../services/store';
 import { createOrder, clearOrder } from '../../services/slices/orderSlice';
 import { clearConstructor } from '../../services/slices/burgerConstructorSlice';
 import { fetchFeed } from '../../services/slices/feedSlice';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 export const BurgerConstructor: FC = () => {
   const dispatch = useDispatch();
@@ -16,6 +16,7 @@ export const BurgerConstructor: FC = () => {
   const orderModalData = useSelector((state) => state.order.orderData);
   const isAuth = useSelector((state) => state.auth.isAuth);
   const navigate = useNavigate();
+  const location = useLocation();
 
   const onOrderClick = async () => {
     if (!isAuth) {
@@ -50,12 +51,14 @@ export const BurgerConstructor: FC = () => {
     [constructorItems]
   );
 
+  const shouldShowModal = orderModalData && location.pathname === '/';
+
   return (
     <BurgerConstructorUI
       price={price}
       orderRequest={orderRequest}
       constructorItems={constructorItems}
-      orderModalData={orderModalData}
+      orderModalData={shouldShowModal ? orderModalData : null}
       onOrderClick={onOrderClick}
       closeOrderModal={closeOrderModal}
     />

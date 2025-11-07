@@ -1,12 +1,9 @@
-// ui/OrdersListUI.tsx
 import { FC } from 'react';
 import { OrdersListUIProps } from './type';
 import { OrderCard } from '@components';
-import styles from './orders-list.module.css'; // Убедитесь, что стили есть
+import styles from './orders-list.module.css';
 
 export const OrdersListUI: FC<OrdersListUIProps> = ({ orderByDate }) => {
-  console.log('OrdersListUI: Получены заказы для отображения:', orderByDate);
-
   if (!orderByDate || orderByDate.length === 0) {
     return <div className={styles.empty}>Нет заказов</div>;
   }

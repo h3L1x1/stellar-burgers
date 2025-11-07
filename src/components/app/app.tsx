@@ -16,17 +16,20 @@ import {
 
 import { OrderInfo, Modal, IngredientDetails } from '@components';
 
-import { Route, Routes, useNavigate } from 'react-router-dom';
+import { Route, Routes, useNavigate, useLocation } from 'react-router-dom';
 
 import ProtectedRoute from '../ProtectedRoute/protectedRoute';
 
 const App = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const background = location.state?.background;
 
   return (
     <div className={styles.app}>
       <AppHeader />
-      <Routes>
+      <Routes location={background || location}>
         <Route path='/' element={<ConstructorPage />} />
         <Route path='/feed' element={<Feed />} />
 
@@ -93,6 +96,39 @@ const App = () => {
 
         <Route path='*' element={<NotFound404 />} />
       </Routes>
+
+      {background && (
+        <Routes>
+          <Route
+            path='/ingredients/:id'
+            element={
+              <Modal title='Детали ингредиента' onClose={() => navigate(-1)}>
+                <IngredientDetails />
+              </Modal>
+            }
+          />
+          <Route
+            path='/feed/:number'
+            element={
+              <Modal title='Детали ингредиента' onClose={() => navigate(-1)}>
+                <OrderInfo />
+              </Modal>
+            }
+          />
+          <Route
+<Question ID="1" Shortcut="chapter 1" Order="" ElementType="chapter" >
+<LongCaption>path='/profile/orders/:number'</LongCaption>
+</Question>
+            element={
+              <ProtectedRoute>
+                <Modal title='Детали ингредиента' onClose={() => navigate(-1)}>
+                  <OrderInfo />
+                </Modal>
+              </ProtectedRoute>
+            }
+          />
+        </Routes>
+      )}
     </div>
   );
 };

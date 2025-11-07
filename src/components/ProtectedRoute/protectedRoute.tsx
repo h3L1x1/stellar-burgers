@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from '../../services/store';
 import { getUser } from '../../services/slices/authSlice';
 import { AppDispatch, RootState } from '../../services/store';
 import { Preloader } from '@ui';
@@ -15,7 +15,7 @@ const ProtectedRoute = ({
   onlyUnAuth = false
 }: ProtectedRouteProps) => {
   const { isAuth, isLoading } = useSelector((state: RootState) => state.auth);
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
   const [authChecked, setAuthChecked] = useState(false);
