@@ -116,9 +116,7 @@ const App = () => {
             }
           />
           <Route
-<Question ID="1" Shortcut="chapter 1" Order="" ElementType="chapter" >
-<LongCaption>path='/profile/orders/:number'</LongCaption>
-</Question>
+            path='/profile/orders/:number'
             element={
               <ProtectedRoute>
                 <Modal title='Детали ингредиента' onClose={() => navigate(-1)}>
