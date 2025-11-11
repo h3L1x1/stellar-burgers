@@ -1,8 +1,5 @@
-import { useEffect, useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
-import { useSelector, useDispatch } from '../../services/store';
-import { getUser } from '../../services/slices/authSlice';
-import { AppDispatch, RootState } from '../../services/store';
+import { useSelector } from '../../services/store';
+import { Navigate, useLocation } from 'react-router-dom';
 import { Preloader } from '@ui';
 
 interface ProtectedRouteProps {
@@ -14,52 +11,27 @@ const ProtectedRoute = ({
   children,
   onlyUnAuth = false
 }: ProtectedRouteProps) => {
-  const { isAuth, isLoading } = useSelector((state: RootState) => state.auth);
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const { isAuth, isLoading } = useSelector((state) => state.auth);
   const location = useLocation();
-  const [authChecked, setAuthChecked] = useState(false);
 
-  useEffect(() => {
-    const checkAuth = async () => {
-      if (localStorage.getItem('refreshToken') && !isAuth) {
-        await dispatch(getUser());
-      }
-      setAuthChecked(true);
-    };
-
-    if (!authChecked) {
-      checkAuth();
-    }
-  }, [dispatch, isAuth, authChecked]);
-
-  useEffect(() => {
-    if (authChecked && !isLoading) {
-      if (!onlyUnAuth && !isAuth) {
-        navigate('/login', { state: { from: location }, replace: true });
-        return;
-      }
-
-      if (onlyUnAuth && isAuth) {
-        navigate(location.state?.from || '/', { replace: true });
-        return;
-      }
-    }
-  }, [authChecked, isAuth, isLoading, onlyUnAuth, navigate, location]);
-
-  if (!authChecked || isLoading) {
+  // Если еще идет загрузка - показываем Preloader
+  if (isLoading) {
     return <Preloader />;
   }
 
-  if (!onlyUnAuth && isAuth) {
-    return children;
+  // Если роут только для неавторизованных и пользователь авторизован
+  if (onlyUnAuth && isAuth) {
+    const from = location.state?.from || { pathname: '/' };
+    return <Navigate to={from} replace />;
   }
 
-  if (onlyUnAuth && !isAuth) {
-    return children;
+  // Если роут защищенный и пользователь не авторизован
+  if (!onlyUnAuth && !isAuth) {
+    return <Navigate to='/login' state={{ from: location }} replace />;
   }
 
-  return null;
+  // Если все проверки пройдены - рендерим children
+  return children;
 };
 
 export default ProtectedRoute;

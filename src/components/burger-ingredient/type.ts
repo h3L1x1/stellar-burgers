@@ -6,5 +6,5 @@ export type TBurgerIngredientProps = {
   count: number;
   handleAdd: () => void;
   onIngredientClick?: () => void;
-  locationState: { background: any };
+  locationState: { background: Location };
 };

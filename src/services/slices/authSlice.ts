@@ -32,8 +32,8 @@ export const loginUser = createAsyncThunk(
       localStorage.setItem('refreshToken', response.refreshToken);
       setCookie('accessToken', response.accessToken);
       return response.user;
-    } catch (error: any) {
-      return rejectWithValue(error.message || 'Ошибка входа');
+    } catch (error: unknown) {
+      return rejectWithValue(error);
     }
   }
 );
@@ -46,8 +46,8 @@ export const registerUser = createAsyncThunk(
       localStorage.setItem('refreshToken', response.refreshToken);
       setCookie('accessToken', response.accessToken.split('Bearer ')[1]);
       return response.user;
-    } catch (error: any) {
-      return rejectWithValue(error.message || 'Ошибка регистрации');
+    } catch (error) {
+      return rejectWithValue(error);
     }
   }
 );
@@ -78,15 +78,12 @@ export const getUser = createAsyncThunk(
       } else {
         return rejectWithValue('Failed to get user');
       }
-    } catch (error: any) {
-      if (
-        error.message === 'You should be authorised' ||
-        error.message === 'jwt expired'
-      ) {
+    } catch (error) {
+      if (error) {
         dispatch(logoutUser());
       }
 
-      return rejectWithValue(error.message || 'Ошибка получения пользователя');
+      return rejectWithValue(error);
     }
   }
 );

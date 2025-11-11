@@ -4,7 +4,7 @@ import { TIngredient } from '@utils-types';
 export type TBurgerIngredientUIProps = {
   ingredient: TIngredient;
   count: number;
-  locationState: { background: any };
+  locationState: { background: Location };
   handleAdd: () => void;
-  onIngredientClick?: () => void; // 🔥 Добавьте эту строку
+  onIngredientClick?: () => void;
 };

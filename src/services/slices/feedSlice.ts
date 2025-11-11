@@ -32,7 +32,6 @@ export const feedSlice = createSlice({
       state.orders = action.payload;
     },
     addOrder: (state, action: PayloadAction<TOrder>) => {
-      // Добавляем новый заказ в начало списка
       state.orders.unshift(action.payload);
       state.total += 1;
       state.totalToday += 1;
