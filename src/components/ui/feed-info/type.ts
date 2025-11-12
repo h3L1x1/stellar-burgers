@@ -1,9 +1,11 @@
+import { TOrder } from '@utils-types';
+
 // types.ts
 export interface FeedInfoUIProps {
   feed: {
     total: number;
     totalToday: number;
-    orders?: any[];
+    orders?: TOrder[];
     isLoading?: boolean;
     error?: string | null;
   };
