@@ -9,7 +9,14 @@ export const IngredientsCategory = forwardRef<
   TIngredientsCategoryProps
 >(
   (
-    { title, titleRef, ingredients, onAddIngredient, getIngredientCount },
+    {
+      title,
+      titleRef,
+      ingredients,
+      onAddIngredient,
+      getIngredientCount,
+      ...rest
+    },
     ref
   ) => {
     const burgerConstructor = useSelector(
@@ -38,6 +45,7 @@ export const IngredientsCategory = forwardRef<
         ref={ref}
         onAddIngredient={onAddIngredient}
         getIngredientCount={getIngredientCount}
+        {...rest}
       />
     );
   }

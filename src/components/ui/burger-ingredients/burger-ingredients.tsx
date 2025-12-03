@@ -52,6 +52,7 @@ export const BurgerIngredientsUI: FC<BurgerIngredientsUIProps> = memo(
             ref={bunsRef}
             onAddIngredient={onAddIngredient}
             getIngredientCount={getIngredientCount}
+            data-cy='bun-ingredients'
           />
           <IngredientsCategory
             title='Начинки'
@@ -60,6 +61,7 @@ export const BurgerIngredientsUI: FC<BurgerIngredientsUIProps> = memo(
             ref={mainsRef}
             onAddIngredient={onAddIngredient}
             getIngredientCount={getIngredientCount}
+            data-cy='mains-ingredients'
           />
           <IngredientsCategory
             title='Соусы'
@@ -68,6 +70,7 @@ export const BurgerIngredientsUI: FC<BurgerIngredientsUIProps> = memo(
             ref={saucesRef}
             onAddIngredient={onAddIngredient}
             getIngredientCount={getIngredientCount}
+            data-cy='sauces-ingredients'
           />
         </div>
       </section>

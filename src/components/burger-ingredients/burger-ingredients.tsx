@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect, FC } from 'react';
 import { useInView } from 'react-intersection-observer';
-import { useNavigate, useLocation } from 'react-router-dom'; // ← ДОБАВЬТЕ ИМПОРТЫ
+import { useNavigate, useLocation } from 'react-router-dom';
 
 import { TTabMode } from '@utils-types';
 import { BurgerIngredientsUI } from '../ui/burger-ingredients';
@@ -123,7 +123,7 @@ export const BurgerIngredients: FC = () => {
       saucesRef={saucesRef}
       onTabClick={onTabClick}
       onAddIngredient={handleAddIngredient}
-      onIngredientClick={handleIngredientClick} // ← ПЕРЕДАЙТЕ ФУНКЦИЮ
+      onIngredientClick={handleIngredientClick}
       getIngredientCount={getIngredientCount}
     />
   );

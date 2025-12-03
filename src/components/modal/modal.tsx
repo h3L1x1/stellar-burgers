@@ -19,9 +19,11 @@ export const Modal: FC<TModalProps> = memo(({ title, onClose, children }) => {
   }, [onClose]);
 
   return ReactDOM.createPortal(
-    <ModalUI title={title} onClose={onClose}>
-      {children}
-    </ModalUI>,
+    <div data-cy='modal-root'>
+      <ModalUI title={title} onClose={onClose}>
+        {children}
+      </ModalUI>
+    </div>,
     modalRoot as HTMLDivElement
   );
 });

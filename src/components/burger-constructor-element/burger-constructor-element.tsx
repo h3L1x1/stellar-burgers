@@ -8,7 +8,7 @@ import {
 } from '../../services/slices/burgerConstructorSlice';
 
 export const BurgerConstructorElement: FC<BurgerConstructorElementProps> = memo(
-  ({ ingredient, index, totalItems }) => {
+  ({ ingredient, index, totalItems, ...rest }) => {
     const dispatch = useDispatch();
 
     const handleMoveDown = () => {
@@ -35,6 +35,7 @@ export const BurgerConstructorElement: FC<BurgerConstructorElementProps> = memo(
         handleMoveUp={handleMoveUp}
         handleMoveDown={handleMoveDown}
         handleClose={handleClose}
+        {...rest}
       />
     );
   }
